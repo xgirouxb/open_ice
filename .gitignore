@@ -75,6 +75,10 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+.conda
+.jupyter
+.local
+.bash_history
 
 # IPython
 profile_default/
