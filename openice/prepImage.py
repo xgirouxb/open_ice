@@ -14,7 +14,7 @@ ee.Initialize()
 # Global water masking function
 
 # Import global water JRC layer
-globalWater = ee.Image('JRC/GSW1_3/GlobalSurfaceWater')\
+globalWater = ee.Image('JRC/GSW1_4/GlobalSurfaceWater')\
                           .select('occurrence').gte(80)
 
 # Import Large Scale International Boundary Polygons for NA, convert to raster
@@ -28,7 +28,7 @@ def waterMask(img):
     This function updates an image's mask so it only contains freshwater pixels.
     Uses permanent water (occurence 80-100 %) in the JRC global surface water dataset
     and removes water pixels in marine coastal areas (using political boundary coastlines) 
-    see manual: https://storage.googleapis.com/global-surface-water/downloads_ancillary/DataUsersGuidev2.pdf
+    see manual: https://storage.googleapis.com/global-surface-water/downloads_ancillary/DataUsersGuidev2021.pdf
     """
     return img.updateMask(globalWater.updateMask(northAmCoastline))
 
