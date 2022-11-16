@@ -1,7 +1,8 @@
-# OPEN-ICE: Open Pixel-based Earth eNgine Ice
+# OPEN-ICE
 
-This repository contains a collection Python modules to implement the OPEN-ICE algorithm which analyses freshwater ice phenology at continental scales using Google Earth Engine's API and open-access optical satellite imagery.
+This repository contains a collection Python modules to implement the  Open Pixel-based Earth eNgine Ice (OPEN-ICE) algorithm which analyses freshwater ice phenology at continental scales using Google Earth Engine's API and open-access optical satellite imagery.
 
+![Alt text](/openIceAlgorithmFlowchart.png?raw=true "Algorithm Flowchart")
 
 ## Requirements
 
