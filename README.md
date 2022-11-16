@@ -4,8 +4,13 @@ This repository contains a collection Python modules to implement the  Open Pixe
 
 ![Alt text](/openIceAlgorithmFlowchart.png?raw=true "Algorithm Flowchart")
 
+## Coming soon
+
+[x] Jupyter Notebook with working example
+[] Python package with docs
+[] JavaScript module for Google Earth Engine code editor
+
 ## Requirements
 
 - A [Google Earth Engine](https://earthengine.google.com/) account 
 - A python environment with the `earthengine-api` package installed
-
