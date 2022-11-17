@@ -25,7 +25,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     spring breakup image.
     
     INPUT
-    tile: ee.Feature() of study area
+    tile: ee.Geometry() of study area
     year: integer [2013, 2021], year of interest
     expDirectory: string, directory in which to save asset (e.g., 'myFolder')
     expFilename: string, name of created asset (e.g., 'myBreakupImg')
