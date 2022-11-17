@@ -12,6 +12,6 @@ This repository contains a collection Python modules to implement the  Open Pixe
 ## Coming soon
 
 - [x] Jupyter Notebook with working example
-- [] Python package with docs
-- [] JavaScript module for Google Earth Engine code editor
-- [] Publication of OPEN-ICE data product on Figshare
+- [ ] Python package with docs
+- [ ] JavaScript module for Google Earth Engine code editor
+- [ ] Publication of OPEN-ICE data product on Figshare
