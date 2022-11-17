@@ -79,6 +79,7 @@ target/
 .jupyter
 .local
 .bash_history
+.config
 
 # IPython
 profile_default/
