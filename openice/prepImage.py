@@ -17,11 +17,6 @@ ee.Initialize()
 globalWater = ee.Image('JRC/GSW1_4/GlobalSurfaceWater')\
                           .select('occurrence').gte(80)
 
-# Import HydroLAKES to use as water raster above 78 deg North (JRC limit)
-hydroLakes78 = ee.FeatureCollection('users/xgirouxb/HydroLAKES_v10')\
-                 .filterBounds(ee.Geometry.BBox(-180, 78, 180, 90))
-hydroLakes78 = ee.Image(0).byte().paint(hydroLakes78, 1)
-
 # Import Large Scale International Boundary Polygons for NA, convert to raster
 filterNorthAm = ee.Filter.inList('country_co', ['CA', 'US'])
 northAm = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017").filter(filterNorthAm)
@@ -33,11 +28,9 @@ def waterMask(img):
     This function updates an image's mask so it only contains freshwater pixels.
     Uses permanent water (occurence 80-100 %) in the JRC global surface water dataset
     and removes water pixels in marine coastal areas (using political boundary coastlines) 
-    see manual: https://storage.googleapis.com/global-surface-water/downloads_ancillary/DataUsersGuidev2.pdf
-    In regions north of 78 degrees in the High Arctic, JRC is unavailable so rasterized
-    HydroLAKES polygons were used
+    see manual: https://storage.googleapis.com/global-surface-water/downloads_ancillary/DataUsersGuidev2021.pdf
     """
-    return img.updateMask(globalWater.Or(hydroLakes78).updateMask(northAmCoastline))
+    return img.updateMask(globalWater.updateMask(northAmCoastline))
 
 # ---------------------------------------------------------------------------- #
 # Tile mask function
