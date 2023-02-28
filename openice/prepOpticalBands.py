@@ -14,9 +14,6 @@ ee.Initialize()
 # ---------------------------------------------------------------------------- #
 # Setup required parameters
 
-# List of properties to copy
-propList = ['system:index', 'system:time_start', 'system:footprint']
-
 # Bands for this script
 l7Bands  =   [  'B1',    'B2',  'B3',  'B4',    'B5',    'B7'] # Landsat 7
 l8Bands  =   [  'B2',    'B3',  'B4',  'B5',    'B6',    'B7'] # Landsat 8
@@ -46,7 +43,6 @@ def prepL7TOA(img):
     # Return clipped and masked, set product property
     return img.addBands(toa, stdBands, True)\
               .clip(toa.geometry().buffer(-2000))\
-              .copyProperties(img, propList)\
               .set('product', 'l7toa')
 
 # ---------------------------------------------------------------------------- #
@@ -68,7 +64,6 @@ def prepL8TOA(img):
   
     # Return, copy properties, set product property
     return img.addBands(toa, stdBands, True)\
-              .copyProperties(img, propList)\
               .set('product', 'l8toa')
         
 # ---------------------------------------------------------------------------- #
@@ -93,7 +88,6 @@ def prepS2TOA(img):
                 
     # Return, copy properties, set product property
     return img.addBands(toa, stdBands, True)\
-              .copyProperties(img, propList)\
               .set('product', 's2toa')
 
 # ---------------------------------------------------------------------------- #
