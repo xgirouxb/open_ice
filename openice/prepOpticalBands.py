@@ -29,7 +29,7 @@ def prepL7TOA(img):
     '''
     This function prepares Landsat 7 Top of Atmosphere images
     for further analysis by masking edge pixels with incomplete
-    data, gap filling 90m of L7 SLC off data, and renaming bands.
+    data, gap filling 60m of L7 SLC off data, and renaming bands.
     '''
     # Rename bands
     img = img.select(l7Bands, stdBands)
