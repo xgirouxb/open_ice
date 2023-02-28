@@ -41,7 +41,7 @@ def prepL7TOA(img):
     toa = toa.updateMask(toa.mask().reduce(ee.Reducer.min()))
   
     # Fill L7 SLC off gaps using focal mean
-    toa = ee.Image(toa.focal_mean(2, 'circle', 'pixels', 8)).blend(toa)
+    toa = ee.Image(toa.focalMean(2, 'circle', 'pixels', 8)).blend(toa)
 
     # Return clipped and masked, set product property
     return img.addBands(toa, stdBands, True)\
