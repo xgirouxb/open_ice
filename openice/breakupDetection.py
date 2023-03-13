@@ -117,7 +117,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     
     # Remove duplicates (select most recently generated image)
     s2toa = ee.ImageCollection(s2toa.sort('GENERATION_TIME', False)\
-                                    .distinct('system:time_start'))
+                                    .distinct(['system:time_start', 'MGRS_TILE']))
 
     # ---------------------------------------------------------------------------- #
     # STEP 3: Add bands, classify water (0)/ ice (1), merge collections
