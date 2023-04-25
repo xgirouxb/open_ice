@@ -31,8 +31,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     cloudThresh: integer [0, 100], filter images from L7, L8, and S2 collection based on
                  cloud cover (default is exclude images with > 90% clouds)
     globalWater: logical, limit analysis to pixels with >80% persistence in JRC global
-                 water layer (default is True, but should be manually set to False
-                 for tiles with latitudes > 70N)
+                 water layer (northern limit of 78N)
     logFilter: logical, apply logistic regression to each pixel and remove potential
                misclassifications, i.e., residuals > 0.85 (default is True)
                
@@ -40,7 +39,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     ee.Image() of spring breakup with following bands at 30 metre resolution
     - breakupDate: day of year pixel transitioned form ice to water
     - R2: r-squared of logistic temporal filter
-    - nPixels: number of total ice and water obs between Feb 15th and Oct 1st of 'year'
+    - nPixels: number of total ice and water obs between Feb 15th and Sept 30th of 'year'
     - breakupGap: days elapsed between last observed ice and first observed water
     - year: year of spring breakup
     """
@@ -58,7 +57,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     # LANDSAT 7 TOP OF ATMOSPHERE REFLECTANCE ------------------------------------ #
 
     # Build a Landsat 7 TOA Collection for roi and poi
-    l7toa = ee.ImageCollection('LANDSAT/LE07/C01/T1_TOA').filterDate(poiStart, poiEnd)\
+    l7toa = ee.ImageCollection('LANDSAT/LE07/C02/T1_TOA').filterDate(poiStart, poiEnd)\
                                                          .filterBounds(tile)\
                                                          .filter(ee.Filter.lt('CLOUD_COVER', cloudThresh))
     
@@ -81,7 +80,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     # LANDSAT 8 SURFACE REFLECTANCE ---------------------------------------------- #
 
     # Build a Landsat 8 TOA collection for roi and poi
-    l8toa = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterDate(poiStart, poiEnd)\
+    l8toa = ee.ImageCollection('LANDSAT/LC08/C02/T1_TOA').filterDate(poiStart, poiEnd)\
                                                          .filterBounds(tile)\
                                                          .filter(ee.Filter.lt('CLOUD_COVER', cloudThresh))
 
@@ -99,7 +98,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     # SENTINEL 2 TOP OF ATMOSPHERE REFLECTANCE ----------------------------------- #
 
     # Build a Sentinel 2 TOA collection for roi and poi    
-    s2toa = ee.ImageCollection('COPERNICUS/S2').filterDate(poiStart, poiEnd)\
+    s2toa = ee.ImageCollection('COPERNICUS/S2_HARMONIZED').filterDate(poiStart, poiEnd)\
                                                .filterBounds(tile)\
                                                .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', cloudThresh))
     
@@ -153,7 +152,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
         # value is high (0.85) so that possible misclassifications occuring during
         # breakup period are kept in case they represent a true succession of
         # changed states (e.g. ice breaks, then wind shifts ice back to that
-        # pixel form anther area in the lake).
+        # pixel form another area in the lake).
 
         # Fit logistic regression of ice ~ time
         imgCol = logisticFilter.fitLogisticRegression(imgCol, 'classIce', 'fracYear')
