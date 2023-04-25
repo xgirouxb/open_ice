@@ -171,6 +171,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
                         .reduce(ee.Reducer.count())\
                         .subtract(1)\
                         .toUint16()\
+                        .selfMask()\
                         .rename(['nPixels'])
 
         # Get R^2 of logistic filter
@@ -190,6 +191,7 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
                         .reduce(ee.Reducer.count())\
                         .subtract(1)\
                         .toUint16()\
+                        .selfMask()\
                         .rename(['nPixels'])
 
         # Create empty image to add as R2 band
