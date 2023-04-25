@@ -4,13 +4,6 @@ import ee
 ee.Initialize()
 
 # ---------------------------------------------------------------------------- #
-# Setup required parameters
-
-# List of properties to copy
-propList = ['system:index', 'system:time_start',
-            'system:footprint', 'product']
-
-# ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
 # LANDSAT 7 TOP OF ATMOSPHERE CLASSIFICATION
 
@@ -21,9 +14,6 @@ propList = ['system:index', 'system:time_start',
 classBandsL7TOA = ['blue', 'swir2']
 
 # Define Landsat 7 TOA classification tree
-# Import decision tree from R, caret(rpart2), tuneLength = 5, tree depth = 2
-# Trained with -> blue + green + red + nir + swir1 + swir2 + ndvi + ndwi + ndsi 
-# Turbid lake pixels included
 treeStringL7TOA = "\n".join([ 
 "1) root 826599 551066 0 (0.333333333 0.333333333 0.333333333)  ",
 "  2) swir2< 0.08972447 549042 274065 0 (0.500830538 0.491060793 0.008108669)  ",
@@ -58,7 +48,8 @@ def classIceL7TOA(img):
                     .updateMask(cloudMask)\
                     .rename(['classIce']) 
     # Return ice, save properties
-    return ice.copyProperties(img, propList)
+    return img.addBands(ice)\
+              .select(['classIce'])
 
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
@@ -71,9 +62,6 @@ def classIceL7TOA(img):
 classBandsL8TOA = ['blue', 'ndsi']
 
 # Define Landsat 8 TOA classification tree
-# Import decision tree from R, caret(rpart2), tuneLength = 5, tree depth = 2
-# Trained with -> blue + green + red + nir + swir1 + swir2 + ndvi + ndwi + ndsi
-# Turbid lake pixels included
 treeStringL8TOA = "\n".join([ 
 "1) root 1173627 782418 0 (3.333333e-01 3.333333e-01 3.333333e-01)  ",
 "  2) blue< 0.1435298 393042   1892 0 (9.951863e-01 4.750128e-03 6.360643e-05) *",
@@ -108,7 +96,8 @@ def classIceL8TOA(img):
                     .updateMask(cloudMask)\
                     .rename(['classIce']) 
     # Return ice, save properties
-    return ice.copyProperties(img, propList)
+    return img.addBands(ice)\
+              .select(['classIce'])
 
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
@@ -121,9 +110,6 @@ def classIceL8TOA(img):
 classBandsS2TOA = ['blue', 'ndsi']
 
 # Define Sentinel 2 TOA classification tree
-# Import decision tree built in R, caret(rpart2), tuneLength = 5, max tree depth = 2
-# Trained with -> blue + green + red + nir + swir1 + swir2 + ndvi + ndwi + ndsi
-# Turbid lake pixels included
 treeStringS2TOA = "\n".join([ 
 "1) root 901695 601130 0 (3.333333e-01 3.333333e-01 3.333333e-01)  ",
 "  2) blue< 0.1408 307367   6950 0 (9.773886e-01 2.253332e-02 7.808255e-05) *",
@@ -158,4 +144,5 @@ def classIceS2TOA(img):
                     .updateMask(cloudMask)\
                     .rename(['classIce']) 
     # Return ice, save properties
-    return ice.copyProperties(img, propList)
+    return img.addBands(ice)\
+              .select(['classIce'])
