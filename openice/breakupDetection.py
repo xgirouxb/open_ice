@@ -12,7 +12,6 @@ ee.Initialize()
 import prepImage as prepImg
 import prepOpticalBands as prepOpt
 import classifyIce as classIce
-import dummyWater as dummyWater
 import logisticFilter as logisticFilter
 import sequenceDetection as seqDetect
 
@@ -140,11 +139,8 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
     
     if logFilter:
     
-        # Add dummy water to force logistic regression to 0 at poiEnd
-        # (useful for pixels with consistent misclassified turbid water),
-        # sort in reverse chrono order
-        imgCol = dummyWater.addDummyData(imgCol, year, tile)\
-                           .sort('system:time_start', False)
+        # Sort in reverse chrono order
+        imgCol = imgCol.sort('system:time_start', False)
 
         # Add fractional year for input as time variable in logistic regression
         imgCol = imgCol.map(prepImg.addFracYear)
@@ -165,9 +161,8 @@ def breakupDetection(tile, year, expDirectory, expFilename, cloudThresh = 90, gl
         # Mask out winter water and summer ice (high residuals)
         imgCol = imgCol.map(logisticFilter.temporalFilter)
 
-        # Remove dummy data, sort chronologically
-        imgCol = imgCol.filterMetadata('dummy', 'equals', 'NO')\
-                       .sort('system:time_start', True)
+        # Sort chronologically
+        imgCol = imgCol.sort('system:time_start', True)
 
         # Count non-masked pixels in stack
         emptyImg = ee.Image(0).clip(tile).rename('classIce')
