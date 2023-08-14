@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Giroux-Bougard"
+    given-names: "Xavier"
+    orcid: "https://orcid.org/0000-0003-0783-9709"
+  - family-names: "Fluet-Chouinard"
+    given-names: "Etienne"
+    orcid: "https://orcid.org/0000-0003-4380-2153"
+  - family-names: "Crowley"
+    given-names: "Morgan A."
+    orcid: "https://orcid.org/0000-0001-5946-529X"
+  - family-names: "Cardille"
+    given-names: "Jeffrey A."
+  - family-names: "Humphries"
+    given-names: "Murray M."
+  doi: "10.1016/j.rse.2023.113656"
+  journal: "Remote Sensing of Environment"
+  start: 113656
+  title: "Multi-sensor detection of spring breakup phenology of Canada's lakes"
+  volume: 295
+  year: 2023
